@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<meta http-equiv="Content-Security-Policy" content="default-src *; font-src 'self' https://fonts.gstatic.com/; style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; script-src 'self' https://api-rest-test-sgm.herokuapp.com 'unsafe-inline'">
+
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+	<script src="js/jquery.min.js"></script>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="js/materialize.min.js"></script>
+
+	<title>Blank App</title>
+</head>
+<body>
+	<nav> <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a></nav>
+
+	<ul id="slide-out" class="sidenav">
+		<li><div class="user-view">
+			<div class="background">
+				<img src="img/fondo.jpg">
+			</div>
+			<a href="#user"><img class="circle" src="img/cara.png"></a>
+			<a href="#name"><span class="white-text name">John Doe</span></a>
+			<a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+		</div></li>
+		<li><a href="#!" class="sidenav-close" id="ajaxcall"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+		<li><a class="sidenav-close" href="#!">Second Link</a></li>
+		<li><div class="divider"></div></li>
+		<li><a class="subheader sidenav-close">Subheader</a></li>
+		<li><a class="waves-effect sidenav-close" href="#!">Third Link With Waves</a></li>
+	</ul>
+
+	<h1 id="msg">000</h1>
+
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    $('.sidenav').sidenav();
+
+		    $('#ajaxcall').click(function() {
+		    	$("#msg").html("cargando..");
+
+			    setTimeout(function() {
+			    	$.ajax({
+				    	url:"https://api-rest-test-sgm.herokuapp.com/get.php?&jsoncallback=?",
+				    	dataType:"JSONp",
+				    	type:"GET",
+				    	crossDomain: true,
+				    	success:function(argument) {
+				    		console.log(argument);
+				    		$("#msg").html(argument.ok);
+				    	},error:function(request, status, error) {
+				    		console.log(request);
+				    		$("#msg").html(request.statusText+"<br><br>"+request.status+"<br><br>"+status+"<br><br>"+error);
+				    	}
+				    });
+			    }, 2000);
+		    });
+
+		    $("#msg").html("cargando..");
+
+		    setTimeout(function() {
+		    	$.ajax({
+			    	url:"https://api-rest-test-sgm.herokuapp.com/get.php?&jsoncallback=?",
+			    	dataType:"JSONp",
+			    	type:"GET",
+			    	crossDomain: true,
+			    	success:function(argument) {
+			    		$("#msg").html(argument.ok);
+			    	},error:function(request, status, error) {
+			    		$("#msg").html(request.statusText+"<br><br>"+request.status+"<br><br>"+status+"<br><br>"+error);
+			    	}
+			    });
+		    }, 2000);
+	  	});
+	</script>
+</body>
+</html>
